@@ -1,0 +1,17 @@
+import sqlite3
+
+def get_bookings():
+    # Connect to the SQLite database
+    conn = sqlite3.connect('hotel.db')
+    cursor = conn.cursor()
+    
+    # Query to get all bookings
+    cursor.execute("SELECT * FROM bookings")
+    bookings = cursor.fetchall()  # This returns a list of tuples
+    
+    # Close the connection
+    conn.close()
+
+    # Return bookings in a form you can use in the template
+    return [{'id': booking[0], 'customer_name': booking[1], 'room_type': booking[2], 
+             'check_in_date': booking[3], 'check_out_date': booking[4]} for booking in bookings]
